@@ -9,6 +9,7 @@ function ForgotPasswordPage() {
   const handleReset = (e) => {
     e.preventDefault();
     alert(`Password reset link sent to: ${email}`);
+    navigate('/verification')
   };
 
   return (
