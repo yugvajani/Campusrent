@@ -22,6 +22,13 @@ mongoose
 app.use('/api/users', userRoutes);
 app.use('/api/items', itemRoutes);
 
+app.use((err,req,res,next)=>{
+    if(err){
+        res.status(500).send("Caught by global catch")
+        next()
+    }
+})
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
