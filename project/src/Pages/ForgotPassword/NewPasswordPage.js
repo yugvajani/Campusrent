@@ -16,6 +16,7 @@ function NewPasswordPage() {
       alert("Passwords do not match!");
     } else {
       alert("Password updated successfully!");
+      navigate('/')
     }
   };
 
