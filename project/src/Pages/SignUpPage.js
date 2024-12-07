@@ -17,7 +17,7 @@ function SignUpPage() {
         {/* Full Name */}
         <div className="input-container">
           <label htmlFor="fullName">
-            <span className="icon">👤</span>
+          <i className="fa fa-user"></i>
             <input
               type="text"
               id="fullName"
@@ -30,7 +30,7 @@ function SignUpPage() {
         {/* Email */}
         <div className="input-container">
           <label htmlFor="email">
-            <span className="icon">📧</span>
+          <i className="fa fa-envelope icon"></i>
             <input
               type="email"
               id="email"
@@ -43,7 +43,7 @@ function SignUpPage() {
         {/* Password */}
         <div className="input-container">
           <label htmlFor="password">
-            <span className="icon">🔒</span>
+          <i className="fa fa-lock"></i>
             <input
               type={showPassword ? "text" : "password"}
               id="password"
@@ -55,11 +55,6 @@ function SignUpPage() {
               className="toggle-password"
               onClick={() => setShowPassword(!showPassword)}
             >
-              {/* <img
-                src={showPassword ? "/images/hide.svg" : "/images/show.svg"}
-                alt={showPassword ? "Hide Password" : "Show Password"}
-                className="toggle-icon"
-              /> */}
             </button>
           </label>
         </div>
@@ -67,7 +62,7 @@ function SignUpPage() {
         {/* Confirm Password */}
         <div className="input-container">
           <label htmlFor="confirmPassword">
-            <span className="icon">🔒</span>
+          <i className="fa fa-lock"></i>
             <input
               type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
@@ -79,11 +74,6 @@ function SignUpPage() {
               className="toggle-password"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
-              {/* <img
-                src={showConfirmPassword ? "/images/hide.svg" : "/images/show.svg"}
-                alt={showConfirmPassword ? "Hide Password" : "Show Password"}
-                className="toggle-icon"
-              /> */}
             </button>
           </label>
         </div>
@@ -94,10 +84,10 @@ function SignUpPage() {
         </button>
       </form>
 
-      {/* Redirect to Login */}
-      <p className="redirect-text">
-        Already have an account? <a href="/">Login</a>
+      <p className="register-text">
+        <a href="/"><span style={{color:'#000000'}}>Already have an account?</span> Login</a>
       </p>
+
     </div>
   );
 }
