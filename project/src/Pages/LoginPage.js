@@ -18,7 +18,7 @@ function LoginPage() {
       <form onSubmit={handleLogin}>
         <div className="input-container">
           <label htmlFor="email">
-            <span className="icon">📧</span>
+            <i className="fa fa-envelope icon"></i>
             <input
               type="email"
               id="email"
@@ -30,8 +30,10 @@ function LoginPage() {
           </label>
         </div>
         <div className="input-container">
-          <label htmlFor="password">
-            <span className="icon">🔒</span>
+          <label htmlFor="password" className="input-label">
+            <div className="icon-container">
+              <i className="fa fa-lock"></i>
+            </div>
             <input
               type={showPassword ? "text" : "password"}
               id="password"
@@ -45,10 +47,11 @@ function LoginPage() {
               className="toggle-password"
               onClick={() => setShowPassword(!showPassword)}
             >
-              {/* {showPassword ? "🙈" : "👁"} */}
+              <i className={`fa ${showPassword ? "fa-eye" : "fa-eye-slash"}`}></i>
             </button>
           </label>
         </div>
+
         <a href="/forgot-password" className="forgot-password">
           Forgot Password?
         </a>
@@ -57,7 +60,7 @@ function LoginPage() {
         </button>
       </form>
       <p className="register-text">
-        Don't have an account? <a href="/signup">Register</a>
+        <a href="/signup"><span style={{color:'#000000'}}>Don't have an account?</span> Register</a>
       </p>
     </div>
   );
