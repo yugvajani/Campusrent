@@ -8,7 +8,6 @@ const { secret, User } = require("../models/User")
 
 router.post('/register', async (req, res) => {
     const userdata = req.body;
-
     if (!userdata.name || !userdata.email || !userdata.username || !userdata.password) {
         return res.status(400).json({
             msg: "Please give all the required fields",
@@ -18,11 +17,9 @@ router.post('/register', async (req, res) => {
     const exists = await User.findOne({ username: userdata.username })
 
     if (!exists) {
-
         const hashedpassword = await bcrypt.hash(userdata.password, 10)
         userdata.password = hashedpassword;
         const user = new User(userdata)
-
         const data = await user.save();
         res.status(200).json({
             msg: "User created successfully",
@@ -48,9 +45,7 @@ router.post('/login', async (req, res) => {
     }
     const user = await User.findOne({ username: username });
     if (user) {
-
         const isValidPassword = await bcrypt.compare(password, user.password)
-
         if (isValidPassword) {
             const token = jwt.sign({ username }, secret);
             res.status(200).json({
@@ -76,16 +71,12 @@ router.post('/login', async (req, res) => {
 
 router.get("/profile", userMiddleware, async (req, res) => {
     const username = req.headers.username;
-
     try {
         const user = await User.findOne({ username: username });
-
         return res.status(200).json({
-
             msg: "User Details",
             data: user
         })
-
     }
     catch (err) {
         return res.status(500).json({
@@ -102,7 +93,6 @@ router.put('/profile', userMiddleware, async (req, res) => {
 
     try {
         const user = await User.findOne({ username: username });
-
         if (!userdata) {
             return res.status(400).json({
                 msg: "Provide data to update",
@@ -129,7 +119,6 @@ router.put('/profile', userMiddleware, async (req, res) => {
             data: err
         })
     }
-
 });
 
 router.delete('/profile', userMiddleware, async (req, res) => {
@@ -137,7 +126,6 @@ router.delete('/profile', userMiddleware, async (req, res) => {
 
     try {
         const user = await User.findOne({ username: username })
-
         await user.deleteOne({ username: username })
         return res.status(200).json({
             msg:"User Deleted",

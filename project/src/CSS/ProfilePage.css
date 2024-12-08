@@ -1,0 +1,133 @@
+/* General container */
+.profile-container {
+  font-family: Arial, sans-serif;
+  background-color: #fff8f0;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 100%;
+  margin: 20px auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 80px;
+  padding: 20px 40px;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+/* Left section */
+.profile-left {
+  flex: 1; /* Take 1 part of the available space */
+  text-align: center;
+}
+
+.profile-image {
+  width: 120px; /* Slightly larger image */
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.profile-name {
+  font-size: 1.8rem;
+  margin: 0;
+  font-weight: bold;
+}
+
+.profile-role {
+  font-size: 1rem;
+  color: #666;
+  margin: 5px 0;
+}
+
+.profile-rating {
+  font-size: 1.2rem;
+  color: #ffc107;
+}
+
+.delete-account-btn {
+  background-color: #ff7043;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.delete-account-btn:hover {
+  opacity: 0.9;
+}
+
+/* Right section */
+.profile-right {
+  flex: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.profile-details {
+  width: 100%;
+}
+
+.profile-details label {
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.profile-details input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fffaf5;
+  color: #333;
+}
+
+/* Logout button */
+.logout-btn {
+  background-color: #ffa726;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.logout-btn:hover {
+  opacity: 0.9;
+}
+
+/* Back Button Container */
+.back-button-container {
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+/* Back Button Style */
+.back-button {
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #e0e0e0;
+}

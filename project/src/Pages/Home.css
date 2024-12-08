@@ -1,0 +1,138 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Full-page Layout */
+  .home-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9a825;
+    padding: 15px 30px;
+    color: white;
+  }
+  
+  .navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .navbar-search input {
+    padding: 8px;
+    width: 400px;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .navbar-search button {
+    padding: 8px 15px;
+    border: none;
+    background-color: #ffa000;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .navbar-links a {
+    margin-left: 20px;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+  }
+  
+  .content {
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+  }
+  
+  .filters {
+    width: 300px;
+    background-color: white;
+    padding: 30px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+  }
+  
+  .filter-section {
+    margin-bottom: 30px;
+  }
+  
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .clear-button {
+    border: none;
+    background: none;
+    color: #f57c00;
+    cursor: pointer;
+  }
+  
+  .filter-price {
+    margin-bottom: 30px;
+  }
+  
+  .price-range input {
+    width: 100%;
+  }
+  
+  .price-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .filter-category ul,
+  .filter-ratings ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .filter-category li,
+  .filter-ratings li {
+    margin: 10px 0;
+    font-size: 16px;
+  }
+  
+  input[type="radio"] {
+    margin-right: 10px;
+  }
+  
+  /* Dropdown Styles */
+  .dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px 0;
+  }
+  
+  /* Product View */
+  .product-view {
+    flex-grow: 1;
+    background-color: white;
+    margin-left: 30px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    overflow-y: auto;
+  }
