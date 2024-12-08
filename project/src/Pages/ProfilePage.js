@@ -111,8 +111,37 @@ const ProfilePage = () => {
     window.location.href = "/login";
   };
 
-  const handleDeleteAccount = () => {
-    alert("Delete Account feature coming soon!");
+  const handleDeleteAccount = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your account? This action cannot be undone."
+    );
+    
+    if (!confirmDelete) return;
+  
+    const token = localStorage.getItem("authToken");
+  
+    try {
+      const response = await fetch("http://localhost:3000/api/users/profile", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Include token for authentication
+        },
+      });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        alert("Account deleted successfully.");
+        localStorage.removeItem("authToken");
+        window.location.href = "./";
+      } else {
+        alert(`Failed to delete account: ${result.msg}`);
+      }
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      alert("An error occurred while deleting your account. Please try again.");
+    }
   };
 
   return (
