@@ -1,5 +1,5 @@
 const express = require('express');
-const { User}  = require('../models/User');
+const { User }  = require('../models/User');
 const Item = require('../models/Item');
 const router = express.Router();
 
@@ -32,7 +32,6 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: err });
     }
 });
-
 
 // Get all items by owner id (route: /api/items/owned)
 router.get('/owned', async (req, res) => {
@@ -142,4 +141,3 @@ router.put('/finish/:id', async (req, res) => {
 });
 
 module.exports = router;
-
