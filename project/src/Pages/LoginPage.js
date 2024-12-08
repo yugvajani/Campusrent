@@ -1,14 +1,39 @@
 import React, { useState } from "react";
 import '../CSS/LoginPage.css'
+import { useNavigate } from "react-router-dom";
 
 function LoginPage() {
-  const [email, setEmail] = useState("");
+  const navigate = useNavigate(); // Initialize the navigate function
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
+    // alert(`Logging in with Email: ${email}, Password: ${password}`);
     e.preventDefault();
-    alert(`Logging in with Email: ${email}, Password: ${password}`);
+    try {
+      const response = await fetch("http://localhost:3000/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: username, password: password })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Save token in localStorage or cookie for subsequent requests
+        localStorage.setItem("authToken", result.data);
+        // Optionally redirect the user or update the UI state
+        navigate("/home")
+      } else {
+        alert(`Login failed: ${result.msg}`);
+      }
+    } catch (error) {
+      console.log(error)
+      alert(error);
+    }
   };
 
   return (
@@ -20,11 +45,11 @@ function LoginPage() {
           <label htmlFor="email">
             <i className="fa fa-envelope icon"></i>
             <input
-              type="email"
+              type="username"
               id="email"
-              placeholder="abc@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </label>
