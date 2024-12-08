@@ -1,9 +1,140 @@
-import React, { useState } from 'react';
-import './Home.css';
+import React, { useState } from "react";
+import { useEffect } from "react"; 
+import "./Home.css";
 
 const Home = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(true);
   const [isRatingsOpen, setIsRatingsOpen] = useState(true);
+  const [selectedOption, setSelectedOption] = useState("Rent");
+  const [userFullName, setUserFullName] = useState("");
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const token = localStorage.getItem("authToken");
+
+      if (!token) {
+        alert("No authentication token found. Please log in.");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:3000/api/users/profile", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          setUserFullName(result.data.name);
+        } else {
+          alert(`Failed to fetch user info: ${result.msg}`);
+        }
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+        alert("An error occurred while fetching user info.");
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
+  const products = [
+    {
+      id: 1,
+      name: "Converse All Star",
+      brand: "Converse",
+      description: "Lorem Ipsum is simply dummy text of the printing...",
+      price: "$40",
+      rating: "4.1",
+      image: "https://via.placeholder.com/150", // Replace with an actual image URL
+    },
+    {
+      id: 2,
+      name: "Nike running shoes",
+      brand: "Nike",
+      description: "Lorem ipsum dolor sit amet, graeco...",
+      price: "$50",
+      rating: "3.9",
+      image: "https://via.placeholder.com/150", // Replace with an actual image URL
+    },
+    {
+      id: 1,
+      name: "Converse All Star",
+      brand: "Converse",
+      description: "Lorem Ipsum is simply dummy text of the printing...",
+      price: "$40",
+      rating: "4.1",
+      image: "https://via.placeholder.com/150", // Replace with an actual image URL
+    },
+    {
+      id: 2,
+      name: "Nike running shoes",
+      brand: "Nike",
+      description: "Lorem ipsum dolor sit amet, graeco...",
+      price: "$50",
+      rating: "3.9",
+      image: "https://via.placeholder.com/150", // Replace with an actual image URL
+    },
+    {
+      id: 1,
+      name: "Converse All Star",
+      brand: "Converse",
+      description: "Lorem Ipsum is simply dummy text of the printing...",
+      price: "$40",
+      rating: "4.1",
+      image: "https://via.placeholder.com/150", // Replace with an actual image URL
+    },
+    {
+      id: 2,
+      name: "Nike running shoes",
+      brand: "Nike",
+      description: "Lorem ipsum dolor sit amet, graeco...",
+      price: "$50",
+      rating: "3.9",
+      image: "https://via.placeholder.com/150", // Replace with an actual image URL
+    },
+    {
+      id: 1,
+      name: "Converse All Star",
+      brand: "Converse",
+      description: "Lorem Ipsum is simply dummy text of the printing...",
+      price: "$40",
+      rating: "4.1",
+      image: "https://via.placeholder.com/150", // Replace with an actual image URL
+    },
+    {
+      id: 2,
+      name: "Nike running shoes",
+      brand: "Nike",
+      description: "Lorem ipsum dolor sit amet, graeco...",
+      price: "$50",
+      rating: "3.9",
+      image: "https://via.placeholder.com/150", // Replace with an actual image URL
+    },
+    {
+      id: 1,
+      name: "Converse All Star",
+      brand: "Converse",
+      description: "Lorem Ipsum is simply dummy text of the printing...",
+      price: "$40",
+      rating: "4.1",
+      image: "https://via.placeholder.com/150", // Replace with an actual image URL
+    },
+    {
+      id: 2,
+      name: "Nike running shoes",
+      brand: "Nike",
+      description: "Lorem ipsum dolor sit amet, graeco...",
+      price: "$50",
+      rating: "3.9",
+      image: "https://via.placeholder.com/150", // Replace with an actual image URL
+    },
+    // Repeat as needed...
+  ];
 
   return (
     <div className="home-container">
@@ -78,8 +209,43 @@ const Home = () => {
           </div>
         </aside>
 
-        <main className="product-view">
-          {/* Product grid will go here */}
+        {/* Toggle Bar and Products */}
+        <main className="main-content">
+          <div className="toggle-bar">
+            <button
+              className={`toggle-option ${selectedOption === "Rent" ? "active" : ""}`}
+              onClick={() => setSelectedOption("Rent")}
+            >
+              Rent
+            </button>
+            <button
+              className={`toggle-option ${
+                selectedOption === "Looking to Lend?" ? "active" : ""
+              }`}
+              onClick={() => setSelectedOption("Looking to Lend?")}
+            >
+              Looking to Lend?
+            </button>
+          </div>
+
+          <div className="product-grid">
+            {products.map((product) => (
+              <div key={product.id} className="product-card">
+                <img src={product.image} alt={product.name} className="product-image" />
+                <div className="product-info">
+                  <h3 className="product-name">{product.name}</h3>
+                  <p className="product-brand">By {product.brand}</p>
+                  <p className="product-description">{product.description}</p>
+                  <div className="product-footer">
+                    <span className="product-price">{product.price}</span>
+                    <span className="product-rating">
+                      {product.rating} ★
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </main>
       </div>
     </div>
