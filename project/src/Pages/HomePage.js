@@ -1,12 +1,52 @@
-import React, { useState } from "react";
-import { useEffect } from "react"; 
-import "../CSS/Home.css";
+import React, { useState, useEffect } from "react";
+import "../CSS/HomePage.css";
 
-const Home = () => {
+const HomePage = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(true);
   const [isRatingsOpen, setIsRatingsOpen] = useState(true);
   const [selectedOption, setSelectedOption] = useState("Rent");
   const [userFullName, setUserFullName] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedRating, setSelectedRating] = useState(null);
+  const [priceRange, setPriceRange] = useState(2000);
+  const [rentalProducts, setRentalProducts] = useState([]);
+  const [lendProducts, setLendProducts] = useState([]);
+  const [username, setUserName] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      const token = localStorage.getItem("authToken");
+
+      if (!token) {
+        // alert("No authentication token found. Please log in.");
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:3000/api/users/profile", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          setUserName(result.data.name);
+        } else {
+          // alert(`Failed to fetch user info: ${result.msg}`);
+        }
+      } catch (error) {
+        console.error("Error fetching user info:", error);
+        // alert("An error occurred while fetching user info.");
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -47,99 +87,81 @@ const Home = () => {
     window.location.href = "./";
   };
 
-  const products = [
-    {
-      id: 1,
-      name: "Converse All Star",
-      brand: "Converse",
-      description: "Lorem Ipsum is simply dummy text of the printing...",
-      price: "$40",
-      rating: "4.1",
-      image: "https://via.placeholder.com/150", // Replace with an actual image URL
-    },
-    {
-      id: 2,
-      name: "Nike running shoes",
-      brand: "Nike",
-      description: "Lorem ipsum dolor sit amet, graeco...",
-      price: "$50",
-      rating: "3.9",
-      image: "https://via.placeholder.com/150", // Replace with an actual image URL
-    },
-    {
-      id: 1,
-      name: "Converse All Star",
-      brand: "Converse",
-      description: "Lorem Ipsum is simply dummy text of the printing...",
-      price: "$40",
-      rating: "4.1",
-      image: "https://via.placeholder.com/150", // Replace with an actual image URL
-    },
-    {
-      id: 2,
-      name: "Nike running shoes",
-      brand: "Nike",
-      description: "Lorem ipsum dolor sit amet, graeco...",
-      price: "$50",
-      rating: "3.9",
-      image: "https://via.placeholder.com/150", // Replace with an actual image URL
-    },
-    {
-      id: 1,
-      name: "Converse All Star",
-      brand: "Converse",
-      description: "Lorem Ipsum is simply dummy text of the printing...",
-      price: "$40",
-      rating: "4.1",
-      image: "https://via.placeholder.com/150", // Replace with an actual image URL
-    },
-    {
-      id: 2,
-      name: "Nike running shoes",
-      brand: "Nike",
-      description: "Lorem ipsum dolor sit amet, graeco...",
-      price: "$50",
-      rating: "3.9",
-      image: "https://via.placeholder.com/150", // Replace with an actual image URL
-    },
-    {
-      id: 1,
-      name: "Converse All Star",
-      brand: "Converse",
-      description: "Lorem Ipsum is simply dummy text of the printing...",
-      price: "$40",
-      rating: "4.1",
-      image: "https://via.placeholder.com/150", // Replace with an actual image URL
-    },
-    {
-      id: 2,
-      name: "Nike running shoes",
-      brand: "Nike",
-      description: "Lorem ipsum dolor sit amet, graeco...",
-      price: "$50",
-      rating: "3.9",
-      image: "https://via.placeholder.com/150", // Replace with an actual image URL
-    },
-    {
-      id: 1,
-      name: "Converse All Star",
-      brand: "Converse",
-      description: "Lorem Ipsum is simply dummy text of the printing...",
-      price: "$40",
-      rating: "4.1",
-      image: "https://via.placeholder.com/150", // Replace with an actual image URL
-    },
-    {
-      id: 2,
-      name: "Nike running shoes",
-      brand: "Nike",
-      description: "Lorem ipsum dolor sit amet, graeco...",
-      price: "$50",
-      rating: "3.9",
-      image: "https://via.placeholder.com/150", // Replace with an actual image URL
-    },
-    // Repeat as needed...
-  ];
+  const handleClearFilter = () => {
+    setSelectedCategory(null);
+    setSelectedRating(null);
+    setPriceRange(2000);
+  };
+
+  useEffect(() => {
+    const fetchRentalProducts = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch("http://localhost:3000/api/items/available/items", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          setRentalProducts(result); // Set the rental products dynamically
+        } else {
+          // alert("Failed to fetch rental products.");
+        }
+      } catch (error) {
+        console.error("Error fetching rental products:", error);
+        // alert("An error occurred while fetching rental products.");
+      } finally {
+        setIsLoading(false); 
+      }
+    };
+
+    fetchRentalProducts();
+  }, []);
+
+  useEffect(() => {
+    const fetchLendProducts = async (username) => {
+        try {
+            setIsLoading(true);
+            const token = localStorage.getItem("authToken"); // Get auth token
+
+            const response = await fetch(`http://localhost:3000/api/items/lend`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`, // Include token for userMiddleware
+                    username, // Add username to headers
+                },
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                setLendProducts(result.data); // Set lend products
+            } else {
+                console.error(`Failed to fetch lent products: ${result.message}`);
+            }
+        } catch (error) {
+            console.error("Error fetching lend products:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+      fetchLendProducts(username);
+  }, [username]);
+
+  // Filter products based on the price range
+  // const getFilteredProducts = () => {
+  //   return products.filter((product) => {
+  //     const productPrice = Number(product.price.replace("$", ""));
+  //     return productPrice <= priceRange;
+  //   });
+  // };
+
+  // const filteredProducts = getFilteredProducts();
 
   return (
     <div className="home-container">
@@ -150,8 +172,17 @@ const Home = () => {
           <button>🔍</button>
         </div>
         <div className="navbar-links">
+          <a href="/home">Home</a>
           <a href="/profile">Profile</a>
-          <a href="./" onClick={(e) => { e.preventDefault(); handleLogout(); }}>Logout</a>
+          <a
+            href="./"
+            onClick={(e) => {
+              e.preventDefault();
+              handleLogout();
+            }}
+          >
+            Logout
+          </a>
         </div>
       </header>
 
@@ -160,16 +191,27 @@ const Home = () => {
           <div className="filter-section">
             <div className="filter-header">
               <span>Filters</span>
-              <button className="clear-button">CLEAR ALL</button>
+              <button className="clear-button" onClick={handleClearFilter}>
+                CLEAR ALL
+              </button>
             </div>
 
             <div className="filter-price">
               <span>PRICE</span>
               <div className="price-range">
-                <input type="range" min="0" max="200000" />
+                <input
+                  type="range"
+                  min="0"
+                  max="2000"
+                  value={priceRange}
+                  onChange={(e) => setPriceRange(Number(e.target.value))}
+                />
                 <div className="price-labels">
-                  <span>₹0</span>
-                  <span>₹200,000</span>
+                  <span>$0</span>
+                  <span>$2,000</span>
+                </div>
+                <div className="selected-price">
+                  Selected Price: ₹{priceRange}
                 </div>
               </div>
             </div>
@@ -184,12 +226,19 @@ const Home = () => {
               </div>
               {isCategoryOpen && (
                 <ul>
-                  <li><input type="radio" name="category" /> Electronics</li>
-                  <li><input type="radio" name="category" /> Mobiles</li>
-                  <li><input type="radio" name="category" /> Laptops</li>
-                  <li><input type="radio" name="category" /> Fashion</li>
-                  <li><input type="radio" name="category" /> Appliances</li>
-                  <li><input type="radio" name="category" /> Home</li>
+                  {["Electronics", "Mobiles", "Laptops", "Fashion", "Appliances", "Home"].map(
+                    (category) => (
+                      <li key={category}>
+                        <input
+                          type="radio"
+                          name="category"
+                          checked={selectedCategory === category}
+                          onChange={() => setSelectedCategory(category)}
+                        />
+                        {category}
+                      </li>
+                    )
+                  )}
                 </ul>
               )}
             </div>
@@ -204,21 +253,31 @@ const Home = () => {
               </div>
               {isRatingsOpen && (
                 <ul>
-                  <li><input type="radio" name="rating" /> 4★ & above</li>
-                  <li><input type="radio" name="rating" /> 3★ & above</li>
-                  <li><input type="radio" name="rating" /> 2★ & above</li>
-                  <li><input type="radio" name="rating" /> 1★ & above</li>
+                  {["4★ & above", "3★ & above", "2★ & above", "1★ & above"].map(
+                    (rating) => (
+                      <li key={rating}>
+                        <input
+                          type="radio"
+                          name="rating"
+                          checked={selectedRating === rating}
+                          onChange={() => setSelectedRating(rating)}
+                        />
+                        {rating}
+                      </li>
+                    )
+                  )}
                 </ul>
               )}
             </div>
           </div>
         </aside>
 
-        {/* Toggle Bar and Products */}
         <main className="main-content">
           <div className="toggle-bar">
             <button
-              className={`toggle-option ${selectedOption === "Rent" ? "active" : ""}`}
+              className={`toggle-option ${
+                selectedOption === "Rent" ? "active" : ""
+              }`}
               onClick={() => setSelectedOption("Rent")}
             >
               Rent
@@ -234,18 +293,18 @@ const Home = () => {
           </div>
 
           <div className="product-grid">
-            {products.map((product) => (
-              <div key={product.id} className="product-card">
-                <img src={product.image} alt={product.name} className="product-image" />
+            {isLoading ? (
+              <p>Loading products...</p>
+            ) : (selectedOption === 'Rent' ? rentalProducts : lendProducts).map((product) => (
+              <div key={product.id || product._id} className="product-card">
+                <img src={product.image || "https://via.placeholder.com/150"} alt={product.name} className="product-image" />
                 <div className="product-info">
                   <h3 className="product-name">{product.name}</h3>
-                  <p className="product-brand">By {product.brand}</p>
+                  <p className="product-brand">By {product.brand || "You"}</p>
                   <p className="product-description">{product.description}</p>
                   <div className="product-footer">
-                    <span className="product-price">{product.price}</span>
-                    <span className="product-rating">
-                      {product.rating} ★
-                    </span>
+                    <span className="product-price">₹{product.price}</span>
+                    <span className="product-rating">{product.rating || "N/A"} ★</span>
                   </div>
                 </div>
               </div>
@@ -257,4 +316,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;

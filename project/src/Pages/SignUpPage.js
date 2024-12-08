@@ -67,7 +67,7 @@ function SignUpPage() {
               id="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="User Name"
+              placeholder="Username"
               required
             />
           </label>

@@ -43,11 +43,11 @@ function LoginPage() {
       <form onSubmit={handleLogin}>
         <div className="input-container">
           <label htmlFor="email">
-            <i className="fa fa-envelope icon"></i>
+            <i className="fa fa-user"></i>
             <input
               type="username"
               id="email"
-              placeholder="username"
+              placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required

@@ -1,7 +1,6 @@
 /* General container */
 .profile-container {
   font-family: Arial, sans-serif;
-  background-color: #fff8f0;
   border-radius: 10px;
   padding: 20px;
   max-width: 100%;
@@ -94,40 +93,30 @@
   color: #333;
 }
 
-/* Logout button */
-.logout-btn {
-  background-color: #ffa726;
-  color: #fff;
+.profile-actions {
+  display: flex;
+  gap: 15px; /* Add spacing between buttons */
+}
+
+.profile-actions button {
+  padding: 10px 20px;
   border: none;
-  padding: 10px 15px;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  margin-top: 20px;
-  width: 100%;
-}
-
-.logout-btn:hover {
-  opacity: 0.9;
-}
-
-/* Back Button Container */
-.back-button-container {
-  text-align: left;
-  margin-bottom: 20px;
-}
-
-/* Back Button Style */
-.back-button {
-  background-color: #f5f5f5;
-  color: #333;
-  border: 1px solid #ddd;
-  padding: 8px 16px;
-  border-radius: 5px;
-  font-size: 1rem;
+  gap: 15px !important;
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.back-button:hover {
-  background-color: #e0e0e0;
+.save-btn {
+  background-color: #5cb85c;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: #f0ad4e;
+  color: white;
+}
+
+.edit-btn {
+  background-color: #0275d8;
+  color: white;
 }

@@ -27,7 +27,8 @@
 
 .navbar-search input {
   padding: 8px;
-  width: 400px;
+  width: 600px;
+  margin-left: -8%;
   border: none;
   border-radius: 4px;
   font-size: 16px;
