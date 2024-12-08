@@ -7,15 +7,16 @@ const itemSchema = new mongoose.Schema({
     stock: { type: Number, required: true },
     category: { type: String, required: true },
     owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    location: {
-        type: String,
-        enum: ['Point'],
-        default: 'Point',
-        coordinates: { type: [Number], default: [0, 0] }
-    },
+    // location: {
+    //     type: String,
+    //     enum: ['Point'],
+    //     default: 'Point',
+    //     coordinates: { type: [Number], default: [0, 0] }
+    // },
     rent_start: { type: Date },
     rent_end: { type: Date },
-    images: [{ type: String }],
+    rented_by: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    status: { type: String, enum: ['available', 'rented'], default: 'available' },
     date_added: { type: Date, default: Date.now }
 });
 
