@@ -108,7 +108,7 @@ const ProfilePage = () => {
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     alert("Logged out successfully!");
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   const handleDeleteAccount = async () => {
