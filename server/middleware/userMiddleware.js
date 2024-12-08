@@ -10,7 +10,6 @@ function userMiddleware(req, res, next) {
         if (decode.username) {
             req.headers.username = decode.username;
             next()
-
         }
         else {
             res.json({

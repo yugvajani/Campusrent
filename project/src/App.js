@@ -6,13 +6,14 @@ import ForgotPasswordPage from "./Pages/ForgotPassword/ForgotPasswordPage";
 import VerificationCodePage from "./Pages/ForgotPassword/VerificationCodePage";
 import NewPasswordPage from "./Pages/ForgotPassword/NewPasswordPage";
 import NewLendPage from "./Pages/NewLendItem";
+import HomePage from "./Pages/HomePage";
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<LoginPage />} /> */}
-        <Route path="/" element={<NewLendPage />} />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/verification" element={<VerificationCodePage />} />

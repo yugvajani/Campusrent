@@ -1,13 +1,42 @@
 import React, { useState } from "react";
 import "../CSS/SignUpPage.css";
+import { useNavigate } from "react-router-dom";
 
 function SignUpPage() {
+  const navigate = useNavigate();
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Registration successful!");
+    try {
+      const response = await fetch("http://localhost:3000/api/users/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // const { name, email, username, password } = req.body;
+        body: JSON.stringify({ name: fullName, email: email, username: username, password: password })
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        // Save token in localStorage or cookie for subsequent requests
+        localStorage.setItem("authToken", result.data);
+        // Optionally redirect the user or update the UI state
+        navigate("/home")
+      } else {
+        alert(`Register failed: ${result.msg}`);
+      }
+    } catch (error) {
+      console.log(error)
+      alert(error);
+    }
   };
 
   return (
@@ -21,7 +50,24 @@ function SignUpPage() {
             <input
               type="text"
               id="fullName"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
               placeholder="Full name"
+              required
+            />
+          </label>
+        </div>
+
+        {/* User Name */}
+        <div className="input-container">
+          <label htmlFor="username">
+          <i className="fa fa-user"></i>
+            <input
+              type="text"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="User Name"
               required
             />
           </label>
@@ -34,6 +80,8 @@ function SignUpPage() {
             <input
               type="email"
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="abc@email.com"
               required
             />
@@ -47,6 +95,8 @@ function SignUpPage() {
             <input
               type={showPassword ? "text" : "password"}
               id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Your password"
               required
             />

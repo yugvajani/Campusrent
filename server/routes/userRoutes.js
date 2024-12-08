@@ -18,9 +18,7 @@ router.post('/register', async (req, res) => {
     const exists = await User.findOne({ username: username })
 
     if (!exists) {
-
         const hashedpassword = await bcrypt.hash(password, 10)
-
         const user = new User({
             username, password: hashedpassword, name, email
         })
@@ -40,11 +38,8 @@ router.post('/register', async (req, res) => {
 
 });
 
-
 router.post('/login', async (req, res) => {
-
     const { username, password } = req.body;
-
     if (!username || !password) {
         return res.status(400).json({
             msg: 'Both username and password are required',
