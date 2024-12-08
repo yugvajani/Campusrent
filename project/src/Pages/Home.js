@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react"; 
-import "./Home.css";
+import "../CSS/Home.css";
 
 const Home = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(true);
@@ -41,6 +41,11 @@ const Home = () => {
 
     fetchUserInfo();
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    window.location.href = "./";
+  };
 
   const products = [
     {
@@ -145,8 +150,8 @@ const Home = () => {
           <button>🔍</button>
         </div>
         <div className="navbar-links">
-          <a href="#">Login</a>
-          <a href="#">More</a>
+          <a href="/profile">Profile</a>
+          <a href="./" onClick={(e) => { e.preventDefault(); handleLogout(); }}>Logout</a>
         </div>
       </header>
 
